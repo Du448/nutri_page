@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Health Story | Artūrs Dučko, Nutriciologs</title>
+    
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom styles for a polished look -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfdfd;
+        }
+        .section-title {
+            color: #4a5c3a;
+        }
+        .primary-button {
+            background-color: #788f69;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .primary-button:hover {
+            background-color: #5c6e51;
+        }
+        .secondary-button {
+            background-color: transparent;
+            border: 2px solid #788f69;
+            color: #788f69;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .secondary-button:hover {
+            background-color: #788f69;
+            color: white;
+        }
+        .dark-button {
+            background-color: #2d3748; /* gray-800 */
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .dark-button:hover {
+             background-color: #1a202c; /* gray-900 */
+        }
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+        .icon-bg {
+            background-color: #f0f4ec;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 72px;
+            height: 72px;
+        }
+        .icon-bg svg {
+            width: 36px;
+            height: 36px;
+        }
+        /* Style for active navigation link */
+        .nav-link.active {
+            color: #4a5c3a;
+            font-weight: 700;
+        }
+        /* Accordion styles */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+        }
+        .accordion-icon {
+            transition: transform 0.4s ease;
+        }
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        /* Slider styles */
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            transition: background-color 0.3s;
+        }
+        .slider-dot.active {
+            background-color: white;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" onclick="showPage('page-home'); return false;" class="text-2xl font-bold section-title flex items-center">
+                Your Health Story <span class="ml-2">🥑</span>
+            </a>
+            <div class="hidden md:flex space-x-8 items-center text-gray-600 font-medium">
+                <a href="#" onclick="showPage('page-home'); return false;" class="nav-link hover:text-green-800 transition">Sākums</a>
+                <a href="#" onclick="showPage('page-services'); return false;" class="nav-link hover:text-green-800 transition">Pakalpojumi</a>
+                <a href="#" onclick="showPage('page-about'); return false;" class="nav-link hover:text-green-800 transition">Par mani</a>
+                <a href="#" onclick="showPage('page-blog'); return false;" class="nav-link hover:text-green-800 transition">Blogs</a>
+                <a href="#" onclick="showPage('page-contact'); return false;" class="nav-link hover:text-green-800 transition">Kontakti</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-800 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95">
+             <a href="#" onclick="showPage('page-home'); closeMobileMenu(); return false;" class="block py-2 px-4 text-sm hover:bg-gray-100">Sākums</a>
+             <a href="#" onclick="showPage('page-services'); closeMobileMenu(); return false;" class="block py-2 px-4 text-sm hover:bg-gray-100">Pakalpojumi</a>
+             <a href="#" onclick="showPage('page-about'); closeMobileMenu(); return false;" class="block py-2 px-4 text-sm hover:bg-gray-100">Par mani</a>
+             <a href="#" onclick="showPage('page-blog'); closeMobileMenu(); return false;" class="block py-2 px-4 text-sm hover:bg-gray-100">Blogs</a>
+             <a href="#" onclick="showPage('page-contact'); closeMobileMenu(); return false;" class="block py-2 px-4 text-sm hover:bg-gray-100">Kontakti</a>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- PAGE: Sākums -->
+        <div id="page-home" class="page-content">
+            <!-- Hero Slider Section -->
+            <section id="hero-slider" class="relative w-full h-screen overflow-hidden">
+                <!-- Slides Container -->
+                <div id="slides-container" class="flex h-full transition-transform duration-700 ease-in-out">
+                    <!-- Slide 1 -->
+                    <div class="slide w-full h-full flex-shrink-0 relative">
+                        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://ik.imagekit.io/vbvwdejj5/mens-health-service-nearby-millcreek-ut.jpg?updatedAt=1750172226192')"></div>
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <div class="relative h-full flex items-center justify-center text-center text-white p-6">
+                            <div>
+                                 <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">Jūsu ceļš uz labsajūtu sākas šeit.</h1>
+                                 <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">Esmu Artūrs Dučko, diplomēts nutriciologs, un mana misija ir palīdzēt jums izprast sava organisma vajadzības un atjaunot enerģiju ar pareizi sabalansētu uzturu.</p>
+                                 <a href="#" onclick="showPage('page-about'); return false;" class="primary-button px-8 py-4 rounded-full font-bold text-lg">Uzzināt vairāk par mani</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="slide w-full h-full flex-shrink-0 relative">
+                         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://ik.imagekit.io/vbvwdejj5/Gemini_Generated_Image_dk5gjedk5gjedk5g.jpeg?updatedAt=1750171991926')"></div>
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <div class="relative h-full flex items-center justify-center text-center text-white p-6">
+                            <div>
+                                 <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">Zinātnē balstīta pieeja, individuāli Jums.</h1>
+                                 <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">Nekādu universālu diētu. Izstrādāsim personalizētu plānu, kas atbilst Jūsu dzīvesveidam, mērķiem un garšas izjūtai, lai sasniegtu ilgtspējīgus rezultātus.</p>
+                                 <a href="#" onclick="showPage('page-services'); return false;" class="primary-button px-8 py-4 rounded-full font-bold text-lg">Apskatīt pakalpojumus</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slider Controls -->
+                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-3 z-10">
+                    <button class="slider-dot active" data-slide="0" aria-label="Pirmais slaids"></button>
+                    <button class="slider-dot" data-slide="1" aria-label="Otrais slaids"></button>
+                </div>
+            </section>
+            
+            <!-- Testimonials Section -->
+            <section class="py-16 md:py-24">
+                 <div class="container mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center section-title mb-12">Pārmaiņas, ko vari sasniegt arī Tu!</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="card p-8">
+                            <p class="text-gray-600 mb-6">"Pateicoties Artūram, es beidzot jūtos enerģijas pilna visas dienas garumā. Vēdera pūšanās ir pagātne! Liels paldies par vienkāršajiem un efektīvajiem ieteikumiem."</p>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/40x40/cccccc/ffffff?text=I" class="w-12 h-12 rounded-full mr-4" alt="Ilze">
+                                <div><p class="font-bold text-gray-800">Ilze V.</p><p class="text-sm text-gray-500">Cēsis</p></div>
+                            </div>
+                        </div>
+                         <div class="card p-8">
+                            <p class="text-gray-600 mb-6">"Sākumā biju skeptisks, bet rezultāti runā paši par sevi. Esmu zaudējis svaru un uzlabojis savu veselību bez badošanās. Profesionāls un ļoti zinošs speciālists."</p>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/40x40/cccccc/ffffff?text=M" class="w-12 h-12 rounded-full mr-4" alt="Māris">
+                                <div><p class="font-bold text-gray-800">Māris L.</p><p class="text-sm text-gray-500">Valmiera</p></div>
+                            </div>
+                        </div>
+                         <div class="card p-8">
+                            <p class="text-gray-600 mb-6">"Ļoti individuāla pieeja. Artūrs iedziļinājās manā problēmā un palīdzēja sakārtot hormonālo sistēmu ar uztura palīdzību. Jūtos kā cits cilvēks!"</p>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/40x40/cccccc/ffffff?text=S" class="w-12 h-12 rounded-full mr-4" alt="Santa">
+                                <div><p class="font-bold text-gray-800">Santa P.</p><p class="text-sm text-gray-500">Rīga</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Accordion FAQ Section -->
+            <section class="py-16 md:py-24 bg-white">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center section-title mb-4">Vai kāds no šiem simptomiem šķiet pazīstams?</h2>
+                    <p class="text-center text-gray-500 max-w-3xl mx-auto mb-12">Ja saskaries ar kādu no šīm sūdzībām, tas ir signāls, ka Tavam organismam ir nepieciešams atbalsts. Apskatīsim, kā es varu palīdzēt.</p>
+                    <div id="symptoms-accordion" class="max-w-3xl mx-auto space-y-4">
+                        <!-- Accordion Item 1 -->
+                        <div class="accordion-item bg-white border border-gray-200 rounded-lg">
+                            <button class="accordion-header flex justify-between items-center w-full p-5 text-left font-semibold text-lg text-gray-800">
+                                Viss par ķermeņa svaru un izskatu
+                                <svg class="accordion-icon w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content">
+                                <ul class="list-disc list-inside p-5 pt-0 text-gray-600">
+                                    <li>Grūtības zaudēt vai uzturēt lieko svaru</li>
+                                    <li>Nepietiekams svars un grūtības to palielināt</li>
+                                    <li>Lēna muskuļu masas augšana</li>
+                                    <li>Celulīts un ādas elastības zudums</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Accordion Item 2 -->
+                        <div class="accordion-item bg-white border border-gray-200 rounded-lg">
+                            <button class="accordion-header flex justify-between items-center w-full p-5 text-left font-semibold text-lg text-gray-800">
+                                Enerģijas trūkums, stress un atmiņa
+                                <svg class="accordion-icon w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content">
+                                <ul class="list-disc list-inside p-5 pt-0 text-gray-600">
+                                    <li>Pastāvīgs stress un iekšējs nemiers</li>
+                                    <li>Pasliktināts garastāvoklis un motivācijas trūkums</li>
+                                    <li>Grūtības koncentrēties un vāja atmiņa</li>
+                                    <li>Nepārvarama tieksme pēc saldumiem vai "stresa ēšana"</li>
+                                    <li>Hronisks nogurums un miegainība dienas laikā</li>
+                                    <li>Slikta miega kvalitāte, grūtības iemigt vai bezmiegs</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Accordion Item 3 -->
+                        <div class="accordion-item bg-white border border-gray-200 rounded-lg">
+                            <button class="accordion-header flex justify-between items-center w-full p-5 text-left font-semibold text-lg text-gray-800">
+                                Ādas, matu un nagu veselība
+                                <svg class="accordion-icon w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content">
+                                <ul class="list-disc list-inside p-5 pt-0 text-gray-600">
+                                    <li>Pastiprināta matu izkrišana, lūstoši, sausi mati</li>
+                                    <li>Trausli, slāņaini vai lēni augoši nagi</li>
+                                    <li>Sausa, niezoša āda, plaisājoši papēži</li>
+                                    <li>Pinnes, akne un citi ādas izsitumi pieaugušo vecumā</li>
+                                    <li>Sejas un ķermeņa tūska, tumši loki zem acīm</li>
+                                    <li>Sāpes locītavās vai muskuļos bez acīmredzama iemesla</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Accordion Item 4 -->
+                        <div class="accordion-item bg-white border border-gray-200 rounded-lg">
+                            <button class="accordion-header flex justify-between items-center w-full p-5 text-left font-semibold text-lg text-gray-800">
+                                Gremošanas sistēmas darbība
+                                <svg class="accordion-icon w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content">
+                                <ul class="list-disc list-inside p-5 pt-0 text-gray-600">
+                                    <li>Smaguma sajūta un vēdera pūšanās pēc ēšanas</li>
+                                    <li>Dedzinoša sajūta kuņģī vai biežas atraugas</li>
+                                    <li>Neregulāra vēdera izeja (aizcietējumi vai caureja)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Accordion Item 5 -->
+                        <div class="accordion-item bg-white border border-gray-200 rounded-lg">
+                            <button class="accordion-header flex justify-between items-center w-full p-5 text-left font-semibold text-lg text-gray-800">
+                                Hormonālais līdzsvars
+                                <svg class="accordion-icon w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content">
+                                <ul class="list-disc list-inside p-5 pt-0 text-gray-600">
+                                    <li>Neregulārs menstruālais cikls vai izteiktas sāpes</li>
+                                    <li>Izteikts premenstruālais sindroms (PMS)</li>
+                                    <li>Samazināts libido vai garastāvokļa svārstības</li>
+                                </ul>
+                            </div>
+                        </div>
+                         <!-- Accordion Item 6 -->
+                        <div class="accordion-item bg-white border border-gray-200 rounded-lg">
+                            <button class="accordion-header flex justify-between items-center w-full p-5 text-left font-semibold text-lg text-gray-800">
+                                Alerģijas un imunitāte
+                                <svg class="accordion-icon w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content">
+                                <ul class="list-disc list-inside p-5 pt-0 text-gray-600">
+                                    <li>Sezonālas vai pārtikas izraisītas alerģijas</li>
+                                    <li>Dažādu produktu nepanesamība</li>
+                                    <li>Vāja imunitāte un bieža slimošana</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE: Pakalpojumi -->
+        <div id="page-services" class="page-content hidden">
+             <section class="py-16 md:py-24 bg-gray-50">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center section-title mb-12">Kā es varu Jums palīdzēt?</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                        <!-- Service 1: Consultation -->
+                        <div class="card flex flex-col">
+                            <img src="https://ik.imagekit.io/vbvwdejj5/istockphoto-1359819435-612x612.jpg?updatedAt=1750173604394" alt="Konsultācija" class="w-full h-48 object-cover">
+                            <div class="p-6 flex-grow flex flex-col">
+                                <h3 class="text-2xl font-bold text-gray-800 mb-3">Konsultācija</h3>
+                                <p class="text-gray-600 mb-6 flex-grow">Piemērots tiem, kas vēlas saņemt uztura un dzīvesveida ieteikumus mērķa sasniegšanai jau tagad.</p>
+                                <a href="#" onclick="showPage('page-contact'); return false;" class="dark-button mt-auto py-2 px-6 rounded-md font-semibold">Uzzināt vairāk</a>
+                            </div>
+                        </div>
+                        <!-- Service 2: Individual Plan -->
+                        <div class="card flex flex-col">
+                             <img src="https://ik.imagekit.io/vbvwdejj5/347b660a34de.jpg?updatedAt=1750173499185" alt="Individuālā veselības programma" class="w-full h-48 object-cover">
+                            <div class="p-6 flex-grow flex flex-col">
+                                <h3 class="text-2xl font-bold text-gray-800 mb-3">Individuālā veselības programma</h3>
+                                <p class="text-gray-600 mb-6 flex-grow">Piemērots tiem, kas vēlas saņemt detalizētas norādes (instrukciju) savas veselības atjaunošanai un sasniegt vēlamo izskatu.</p>
+                                <a href="#" onclick="showPage('page-contact'); return false;" class="dark-button mt-auto py-2 px-6 rounded-md font-semibold">Uzzināt vairāk</a>
+                            </div>
+                        </div>
+                        <!-- Service 3: VIP Program -->
+                        <div class="card flex flex-col">
+                            <img src="https://ik.imagekit.io/vbvwdejj5/20230406151832642eb89874840.jpg?updatedAt=1750173499378" alt="Veselības programma VIP" class="w-full h-48 object-cover">
+                            <div class="p-6 flex-grow flex flex-col">
+                                <h3 class="text-2xl font-bold text-gray-800 mb-3">Veselības programma VIP</h3>
+                                <p class="text-gray-600 mb-6 flex-grow">Piemērots tiem, kas vēlas sasniegt maksimālu rezultātu nutriciologa personīgā vadībā.</p>
+                                <a href="#" onclick="showPage('page-contact'); return false;" class="dark-button mt-auto py-2 px-6 rounded-md font-semibold">Uzzināt vairāk</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE: Par mani -->
+        <div id="page-about" class="page-content hidden">
+            <section class="py-16 md:py-24 bg-white">
+                <div class="container mx-auto px-6">
+                    <div class="flex flex-col md:flex-row items-center gap-12">
+                         <div class="md:w-1/3">
+                            <img src="https://placehold.co/500x500/c7d8b5/4a5c3a?text=Art%C5%ABrs+Du%C4%8Dko" alt="Uztura speciālists Artūrs Dučko" class="rounded-lg shadow-xl w-full max-w-sm mx-auto">
+                        </div>
+                        <div class="md:w-2/3 text-center md:text-left">
+                            <h2 class="text-3xl md:text-4xl font-bold section-title mb-4">Mans redzējums un pieeja</h2>
+                            <p class="text-lg text-gray-600 mb-4">
+                                Kā speciālists, es dziļi izprotu gremošanas procesus, uzturvielu ietekmi uz organismu un to, kā veidot veselīgu dzīvesveidu. Mans uzdevums ir veikt organisma stāvokļa diagnostiku, atklāt jūsu sūdzību patiesos cēloņus un sniegt pilnvērtīgu, zinātnē balstītu skaidrojumu un ieteikumus.
+                            </p>
+                            <p class="text-gray-600 mb-6">
+                               Es ticu, ka katrs cilvēks ir unikāls, tāpēc mana pieeja ir stingri individuāla. Mēs kopā atradīsim labāko risinājumu tieši Jums. Es neizrakstu brīnumtabletes, bet gan iemācu Tevi saprast sava ķermeņa signālus un izveidot ēdienkarti, kas kļūs par Tavu dzīvesveidu.
+                            </p>
+                            <a href="#" onclick="showPage('page-services'); return false;" class="secondary-button px-8 py-3 rounded-full font-semibold">Apskatīt manus pakalpojumus</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE: Blogs -->
+        <div id="page-blog" class="page-content hidden">
+            <section class="py-16 md:py-24 bg-white">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center section-title mb-12">Ieskats manā blogā</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="card overflow-hidden">
+                            <img src="https://placehold.co/600x400/9b9b7a/ffffff?text=Og%C4%BChidr%C4%81ti" alt="Blog post image" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-3">Bīstamākais ogļhidrāts tavā virtuvē</h3>
+                                 <p class="text-gray-600 mb-4 text-sm">Ne visi ogļhidrāti ir vienādi. Uzzini, no kura vajadzētu uzmanīties visvairāk, lai uzlabotu savu vielmaiņu.</p>
+                                <a href="#" class="font-semibold text-green-700 hover:text-green-800 transition">Lasīt vairāk &rarr;</a>
+                            </div>
+                        </div>
+                        <div class="card overflow-hidden">
+                            <img src="https://placehold.co/600x400/c7d8b5/ffffff?text=Nogurums" alt="Blog post image" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-3">Kā uzveikt hroniska noguruma sindromu?</h3>
+                                <p class="text-gray-600 mb-4 text-sm">Ja jūties pastāvīgi noguris, iespējams, risinājums slēpjas tavā šķīvī. Praktiski padomi enerģijas atgūšanai.</p>
+                                <a href="#" class="font-semibold text-green-700 hover:text-green-800 transition">Lasīt vairāk &rarr;</a>
+                            </div>
+                        </div>
+                         <div class="card overflow-hidden">
+                            <img src="https://placehold.co/600x400/788f69/ffffff?text=Vielmai%C5%86a" alt="Blog post image" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-3">Lietas, no kā izvairīties tavai vielmaiņai</h3>
+                                <p class="text-gray-600 mb-4 text-sm">Atklāj ikdienas ieradumus un produktus, kas nemanot kaitē tavai vielmaiņai un labsajūtai.</p>
+                                <a href="#" class="font-semibold text-green-700 hover:text-green-800 transition">Lasīt vairāk &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE: Kontakti -->
+        <div id="page-contact" class="page-content hidden">
+            <section class="py-16 md:py-24">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center section-title mb-4">Sazinies ar mani</h2>
+                    <p class="text-center text-gray-500 max-w-2xl mx-auto mb-12">Aizpildi formu zemāk vai izmanto citu saziņas veidu. Ar prieku atbildēšu uz taviem jautājumiem un vienosimies par konsultācijas laiku.</p>
+                    <div class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-md">
+                        <form name="kontakti" method="POST" data-netlify="true">
+                            <div class="mb-4">
+                                <label for="name" class="block text-gray-700 font-medium mb-2">Vārds</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-gray-700 font-medium mb-2">E-pasts</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            </div>
+                            <div class="mb-6">
+                                <label for="message" class="block text-gray-700 font-medium mb-2">Tava ziņa</label>
+                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="primary-button px-8 py-3 rounded-full font-bold w-full">Nosūtīt ziņu</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-10 border-t border-gray-700">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Your Health Story 🥑</h3>
+                    <p class="text-gray-400">Jūsu personīgais ceļvedis uztura pasaulē.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Kontaktinformācija</h3>
+                    <p class="text-gray-400 mb-2">📧 <a href="mailto:arturs.ducko@piemers.lv" class="hover:text-green-400">arturs.ducko@piemers.lv</a></p>
+                    <p class="text-gray-400">📞 <a href="tel:+37122334455" class="hover:text-green-400">+371 22 334 455</a></p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Seko man sociālajos tīklos</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.675 0h-21.35C.59 0 0 .59 0 1.325v21.35C0 23.41.59 24 1.325 24H12.82v-9.29h-3.128v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h5.713c.735 0 1.325-.59 1.325-1.325V1.325C24 .59 23.41 0 22.675 0z"/></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.012 3.584-.07 4.85c-.148 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.012-3.584.07-4.85C2.25 3.854 3.784 2.31 7.031 2.163 8.297 2.175 8.676 2.163 12 2.163zm0 1.626c-3.141 0-3.483.011-4.708.067-2.61.12-3.882 1.39-4.002 4.002-.056 1.225-.067 1.567-.067 4.708s.011 3.483.067 4.708c.12 2.61 1.39 3.882 4.002 4.002 1.225.056 1.567.067 4.708.067s3.483-.011 4.708-.067c2.61-.12 3.882-1.39 4.002-4.002.056-1.225.067-1.567.067-4.708s-.011-3.483-.067-4.708c-.12-2.61-1.39-3.882-4.002-4.002-1.225-.056-1.567-.067-4.708-.067zM12 6.837a5.163 5.163 0 100 10.326 5.163 5.163 0 000-10.326zm0 8.703a3.54 3.54 0 110-7.08 3.54 3.54 0 010 7.08zM16.965 6.575a1.225 1.225 0 100 2.449 1.225 1.225 0 000-2.449z"/></svg></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-700 pt-6 text-center text-gray-400 text-sm">
+                <p>&copy; 2025 Your Health Story. Visas tiesības aizsargātas.</p>
+                <p class="mt-1"><a href="#" class="hover:text-white">Privātuma politika</a> | <a href="#" class="hover:text-white">Lietošanas noteikumi</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Page Navigation Logic ---
+            const pages = document.querySelectorAll('.page-content');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.showPage = function(pageId) {
+                pages.forEach(page => {
+                    page.classList.add('hidden');
+                });
+
+                const pageToShow = document.getElementById(pageId);
+                if (pageToShow) {
+                    pageToShow.classList.remove('hidden');
+                }
+
+                navLinks.forEach(link => {
+                    if (link.getAttribute('onclick').includes(pageId)) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+                
+                window.scrollTo(0, 0);
+            }
+
+            // --- Mobile Menu Logic ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            window.closeMobileMenu = function() {
+                mobileMenu.classList.add('hidden');
+            }
+
+            // --- Accordion Logic ---
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const content = item.querySelector('.accordion-content');
+
+                header.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    if (isActive) {
+                        item.classList.remove('active');
+                        content.style.maxHeight = '0px';
+                    } else {
+                        item.classList.add('active');
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    }
+                });
+            });
+
+            // --- Hero Slider Logic ---
+            const slider = document.getElementById('hero-slider');
+            if (slider) {
+                const slidesContainer = slider.querySelector('#slides-container');
+                const slides = slider.querySelectorAll('.slide');
+                const dots = slider.querySelectorAll('.slider-dot');
+                let currentSlide = 0;
+                let slideInterval;
+
+                function showSliderSlide(index) {
+                    if (slidesContainer) {
+                       slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+                    }
+                    
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                    currentSlide = index;
+                }
+
+                function nextSlide() {
+                    showSliderSlide((currentSlide + 1) % slides.length);
+                }
+
+                function startSlider() {
+                    stopSlider();
+                    slideInterval = setInterval(nextSlide, 3000);
+                }
+
+                function stopSlider() {
+                    clearInterval(slideInterval);
+                }
+
+                dots.forEach(dot => {
+                    dot.addEventListener('click', () => {
+                        stopSlider();
+                        showSliderSlide(parseInt(dot.dataset.slide));
+                        startSlider();
+                    });
+                });
+
+                startSlider();
+            }
+            
+            // Show the home page by default on initial load
+            showPage('page-home');
+        });
+    </script>
+</body>
+</html>
