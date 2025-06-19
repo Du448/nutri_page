@@ -406,11 +406,8 @@
                     <h2 class="text-3xl md:text-4xl font-bold text-center section-title mb-4">Sazinies ar mani</h2>
                     <p class="text-center text-gray-500 max-w-2xl mx-auto mb-12">Aizpildi formu zemāk vai izmanto citu saziņas veidu. Ar prieku atbildēšu uz taviem jautājumiem un vienosimies par konsultācijas laiku.</p>
                     <div class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-md">
-                        <form name="kontakti" 
-                                method="POST" 
-                                data-netlify="true" 
-                                    action="/paldies.html">
-                                     <input type="hidden" name="form-name" value="kontakti" />
+                        <form name="kontakti" method="POST" data-netlify="true" id="contact-form">
+                            <input type="hidden" name="form-name" value="kontakti" />
                             <div class="mb-4">
                                 <label for="name" class="block text-gray-700 font-medium mb-2">Vārds</label>
                                 <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
@@ -431,6 +428,18 @@
                 </div>
             </section>
         </div>
+        
+        <!-- PAGE: Paldies -->
+        <div id="page-thank-you" class="page-content hidden">
+             <section class="py-16 md:py-24">
+                <div class="container mx-auto px-6 text-center">
+                     <h1 class="text-4xl md:text-5xl font-bold section-title mb-4">Paldies par Jūsu ziņu!</h1>
+                     <p class="text-lg text-gray-600 mb-8">Sazināšos ar Jums tuvākajā laikā.</p>
+                     <a href="#" onclick="showPage('page-home'); return false;" class="primary-button px-8 py-4 rounded-full font-bold text-lg">Atgriezties sākumlapā</a>
+                </div>
+            </section>
+        </div>
+
 
     </main>
 
@@ -563,6 +572,23 @@
                 startSlider();
             }
             
+            // --- Netlify Form Handling ---
+            const contactForm = document.getElementById('contact-form');
+            if(contactForm) {
+                 contactForm.addEventListener('submit', e => {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(contactForm);
+                    fetch('/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams(formData).toString()
+                    })
+                    .then(() => showPage('page-thank-you'))
+                    .catch(error => alert(error));
+                });
+            }
+
             // Show the home page by default on initial load
             showPage('page-home');
         });
